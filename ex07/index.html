@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Forca</title>
+    <style>
+        #wordDisplay {
+            font-size: 24px;
+            letter-spacing: 10px;
+        }
+
+        .letter-button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        #hangman {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Jogo da Forca</h1>
+
+    <!-- Palavra a ser adivinhada -->
+    <div id="wordDisplay"></div>
+
+    <!-- Letras do alfabeto -->
+    <div id="letters"></div>
+
+    <!-- Boneco enforcado -->
+    <div id="hangman">
+        <pre id="hangmanDrawing">
+      +---+
+      |   |
+          |
+          |
+          |
+          |
+    =========
+    </pre>
+    </div>
+
+    <script>
+        const words = [
+            "abacaxi", "anel", "amigo", "ave", "abacate",
+            "bola", "bala", "banho", "bau", "banco",
+            "casa", "cachorro", "carro", "cafe", "cama",
+            "dado", "dedo", "doce", "dia", "dente",
+            "elefante", "estrela", "escola", "elo", "escada",
+            "faca", "festa", "fogo", "foca", "fada",
+            "gato", "galo", "gelo", "goma", "ganso",
+            "helicoptero", "hipopotamo", "hotel", "harpa", "horta",
+            "ilha", "iglu", "iris", "indio", "ima",
+            "janela", "jarra", "jogo", "jumento", "joaninha",
+            "ketchup", "kiwi", "karate", "koala", "kamikaze",
+            "leao", "lago", "lua", "lima", "livro",
+            "maca", "mala", "muro", "mapa", "mesa",
+            "neve", "ninho", "navio", "nuvem", "nota",
+            "olho", "ovo", "onda", "ouro", "orelha",
+            "pato", "peixe", "pipoca", "pato", "perna",
+            "quilo", "quadro", "queijo", "quina", "queda",
+            "raio", "rosa", "rede", "rato", "roupa",
+            "seboso", "sapo", "seda", "sabao", "sapato",
+            "tigre", "touro", "teto", "tela", "tesoura",
+            "uva", "urso", "urna", "uniao", "umidade",
+            "vaca", "verao", "vento", "vela", "vidro",
+            "webcam", "whisky", "waffle", "walker", "wifi",
+            "xale", "xadrez", "xerox", "xarope", "xampu",
+            "yoga", "yakisoba", "yogurte", "yeti", "yuppie",
+            "zebra", "zoologico", "zumbi", "zero", "zagueiro"
+        ];
+        const word = words[Math.floor(Math.random() * words.length)]; // Seleciona uma palavra aleatória
+        let attempts = 0; // Contador de erros
+
+        const maxAttempts = 6; // Máximo de tentativas antes do jogo acabar
+        const wordDisplay = document.getElementById('wordDisplay');
+        const lettersDiv = document.getElementById('letters');
+        const hangmanDrawing = document.getElementById('hangmanDrawing');
+
+        let guessedWord = Array(word.length).fill('_'); // Mostra "_" para a palavra no início
+        wordDisplay.textContent = guessedWord.join(' ');
+
+        // Alfabeto para os botões
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+        // Cria os botões para cada letra
+        alphabet.forEach(letter => {
+            const button = document.createElement('button');
+            button.textContent = letter;
+            button.classList.add('letter-button');
+            button.addEventListener('click', () => guessLetter(letter, button));
+            lettersDiv.appendChild(button);
+        });
+
+        // Função para adivinhar a letra
+        function guessLetter(letter, button) {
+            button.disabled = true; // Desabilita o botão após o clique
+
+            if (word.includes(letter)) {
+                // Atualiza a palavra se acertar a letra
+                word.split('').forEach((char, index) => {
+                    if (char === letter) {
+                        guessedWord[index] = letter;
+                    }
+                });
+                wordDisplay.textContent = guessedWord.join(' ');
+
+                // Verifica se a palavra foi adivinhada
+                if (!guessedWord.includes('_')) {
+                    alert('Parabéns! Você ganhou!');
+                    resetGame();
+                }
+            } else {
+                // Erro: desenha uma parte do boneco
+                attempts++;
+                updateHangman();
+                if (attempts >= maxAttempts) {
+                    alert(`Você perdeu! A palavra era: ${word}`);
+                    resetGame();
+                }
+            }
+        }
+
+        // Atualiza o desenho do boneco
+        function updateHangman() {
+            const stages = [
+                `
+      +---+
+      |   |
+      O   |
+          |
+          |
+          |
+    =========`,
+                `
+      +---+
+      |   |
+      O   |
+      |   |
+          |
+          |
+    =========`,
+                `
+      +---+
+      |   |
+      O   |
+     /|   |
+          |
+          |
+    =========`,
+                `
+      +---+
+      |   |
+      O   |
+     /|\\  |
+          |
+          |
+    =========`,
+                `
+      +---+
+      |   |
+      O   |
+     /|\\  |
+     /    |
+          |
+    =========`,
+                `
+      +---+
+      |   |
+      O   |
+     /|\\  |
+     / \\  |
+          |
+    =========`
+            ];
+
+            hangmanDrawing.textContent = stages[attempts - 1];
+        }
+
+        // Função para resetar o jogo após ganhar ou perder
+        function resetGame() {
+            location.reload(); // Recarrega a página para um novo jogo
+        }
+    </script>
+
+</body>
+
+</html>

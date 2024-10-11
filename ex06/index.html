@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Separar Letras</title>
+    <style>
+        body{
+            font-family: arial;
+        }
+        .letter {
+            font-size: 48px;
+            padding: 5px;
+            display: inline-block;
+            text-transform: uppercase;
+            border: 2px solid #eee;
+            border-radius: 16px;
+            margin: 8px;
+            font-family: arial;
+        }
+    </style>
+    <script type="text/javascript" src="js/script.js" defer></script>
+</head>
+
+<body>
+
+    <h1>Separador</h1>
+
+    <form id="letterForm">
+        <label>
+            Palavra:
+        </label>
+        <input type="text" id="wordInput" placeholder="Escreva uma palavra" required>
+        <button type="submit">Separar</button>
+    </form>
+
+    <div id="result"></div>
+
+</body>
+
+</html>

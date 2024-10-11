@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despesas CRUD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Gerenciamento de Despesas</h1>
+    <form id="expenseForm">
+        <label for="description">Descrição:</label>
+        <input type="text" id="description" name="description" required>
+        <label for="value">Valor:</label>
+        <input type="text" id="value" name="value" required>
+        <button type="submit">Adicionar Despesa</button>
+    </form>
+
+    <h2>Lista de Despesas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="expensesList">
+            <!-- Despesas serão carregadas aqui -->
+        </tbody>
+    </table>
+
+    <h3>Total de Despesas: R$ <span id="totalExpenses">0</span></h3>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.4.1/parse.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
